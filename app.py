@@ -63,13 +63,6 @@ def save_photo(photo):
     return photo_filename
 
 
-@app.route("/checkarticles")
-def checkarticles():
-    all_articles = articles.query.all()
-    print(all_articles)
-    return "result in console!"
-
-
 @app.route('/registr', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
