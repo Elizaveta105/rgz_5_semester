@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Мои статьи</h1>
+    <p>
+        <a href="/glavn" style="border: 2px solid rgb(119, 81, 39); padding: 5px 10px; border-radius: 5px;">Вернуться на главную</a>
+    </p>
+
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h3><a href="/articles/{{ article.id }}">{{ article.title }}</a></h3>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
