@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <form method="POST" action="/edit" enctype="multipart/form-data">
+        <h1>Редактирование объявления</h1>
+
+        <div>
+            <input type="text" id="title" name="title" value="{{ articles.title }}" placeholder="Заголовок" required>
+            <label for="title">Заголовок</label>
+        </div>
+
+        <div>
+            <textarea id="article_text" placeholder="Текст объявления" name="article_text" required>{{ articles.article_text }}</textarea>
+            <label for="article_text">Текст объявления</label>
+        </div>
+
+        <br><span class="error" style="color: red;">{{ error }}</span><br>
+
+        <input type="submit" value="Сохранить изменения">
+        <p>
+            <a href="/glavn" style="color: white; border: 2px solid rgb(96, 159, 121); padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
+        </p>
+    </form>
+{% endblock %}
