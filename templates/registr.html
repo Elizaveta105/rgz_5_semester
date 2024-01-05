@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <form method="POST" action="/registr" enctype="multipart/form-data">
+        <h1>Страница регистрации</h1>
+
+        <div>
+            <input type="text" name="username" placeholder="Имя" required>
+            <label for="username">Имя</label>
+            {% if error and "Имя" in error %}
+                <span class="error_message" style="color: red;">{{ error_message }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <label for="password">Пароль</label>
+            {% if error and "Пароль" in error %}
+                <span class="error_message" style="color: red;">{{ error }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <input type="text" name="login" placeholder="Логин" required>
+            <label for="login">Логин</label>
+            {% if error and "Логин" in error %}
+                <span class="error_message" style="color: red;">{{ error }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <input type="text" name="mail" placeholder="Почта" required>
+            <label for="mail">Почта</label>
+            {% if error and "Почта" in error %}
+                <span class="error_message" style="color: red;">{{ error }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            <textarea name="about" placeholder="О себе"></textarea>
+            <label for="about">О себе</label>
+        </div>
+
+        <div>
+            <input type="file" name="photo" accept="image/*">
+            <label for="photo">Фотография</label>
+        </div>
+
+        <br>
+        <div class="error_block">
+            {% if error %}
+                <span class="error_message" style="color: red;">{{ error }}</span>
+            {% endif %}
+        </div>
+        <br>
+
+        <input type="submit" value="Зарегистрироваться">
+        <p>
+            <a href="/" style="color: white; border: 2px solid rgb(96, 159, 121); padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
+        </p>
+    </form>
+{% endblock %}
