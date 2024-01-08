@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block lab %}Расчетно-графическое задание{% endblock %}
+
 {% block main %}
     <form method="POST" action="{{ url_for('delete') }}">
         <h1>Удаление объявления</h1>

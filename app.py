@@ -30,7 +30,7 @@ def load_users(user_id):
     return users.query.get(int(user_id))
 
 
-@app.route("/glavn")
+@app.route("/")
 def glavn():
     if current_user.is_authenticated:
         username = current_user.username
