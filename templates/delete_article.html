@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <form method="POST" action="{{ url_for('delete') }}">
+        <h1>Удаление объявления</h1>
+
+        <p>Вы действительно хотите удалить объявление "{{ article.title }}"?</p>
+
+        <input type="submit" value="Удалить">
+    </form>
+{% endblock %}
