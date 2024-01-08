@@ -1,9 +1,10 @@
-from flask import Flask, redirect, Blueprint, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for
 from Db import db
 from Db.models import users, articles
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, login_required, current_user, logout_user, LoginManager
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
 app = Flask(__name__)
@@ -92,13 +93,18 @@ def register():
             hashed_password = generate_password_hash(password)
             photo_filename = save_photo(photo)
 
+            is_admin = False
+            if login == "admin":
+                is_admin = True
+
             new_user = users(
-                login = login,
+                login=login,
                 password=hashed_password,
                 username=username,
                 photo=photo_filename,
-                mail = mail,
-                about=about 
+                mail=mail,
+                about=about,
+                is_admin=is_admin
             )
 
             db.session.add(new_user)
@@ -211,3 +217,26 @@ def delete():
         return redirect(url_for('article_list'))
 
     return render_template("delete_article.html", article=article)
+
+
+@app.route('/user_list')
+@login_required
+def user_list():
+    if not current_user.is_admin:
+        return "Доступ запрещен"
+
+    user = users.query.all()  # Получение всех пользователей из базы данных
+
+    return render_template('user_list.html', users=user)
+
+
+@app.route('/delete_account/<int:user_id>', methods=['POST'])
+@login_required
+def delete_account(user_id):
+    if not current_user.is_admin:
+        return "Доступ запрещен"
+
+    user = users.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('user_list'))  # Перенаправление на страницу со списком пользователей

@@ -16,7 +16,11 @@
             {% for article in articles %}
             <tr>
                 <td>{{ article.username }}</td>
-                <td>{{ article.mail }}</td>
+                {% if current_user.is_authenticated %}
+                    <td>{{ article.mail }}</td>
+                {% else %}
+                    <td>***</td>
+                {% endif %}
                 <td>{{ article.title }}</td>
                 <td>{{ article.article_text }}</td>
             </tr>

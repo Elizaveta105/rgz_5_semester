@@ -9,6 +9,7 @@ class users(db.Model, UserMixin):
     photo = db.Column(db.String(200), nullable=False)
     mail = db.Column(db.String(30), nullable=False, unique=True)
     about = db.Column(db.String(200))
+    is_admin = db.Column(db.Boolean, default=False)
     def __repr__(self):
         return f'id:{self.id}, username:{self.username}, mail:{self.mail}'
 
