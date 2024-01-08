@@ -142,7 +142,7 @@ def logout():
     return redirect(url_for('glavn'))
 
 
-@app.route("/articles")
+@app.route("/article_list")
 @login_required
 def article_list():
     my_articles = articles.query.filter_by(username=current_user.username).all()
@@ -174,3 +174,40 @@ def view_article(article_id):
     if not article:
         return "Статья не найдена"
     return render_template("article_details.html", article=article)
+
+
+@app.route("/list_articles")
+def list_articles():
+    all_articles = articles.query.all()
+    return render_template("article_list.html", articles=all_articles)
+
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    article = articles.query.filter_by(username=current_user.username).first()
+
+    if request.method == 'POST':
+        # Обработка данных формы редактирования
+        article.title = request.form['title']
+        article.article_text = request.form['article_text']
+
+        db.session.commit()  # Сохранить изменения пользователя в базе данных
+
+        return redirect(url_for('article_list'))
+
+    return render_template('edit.html', articles=article)
+
+
+@app.route("/delete", methods=['GET', 'POST'])
+@login_required
+def delete():
+    article = articles.query.filter_by(username=current_user.username).first()
+
+    if request.method == 'POST':
+        db.session.delete(article)
+        db.session.commit()  # Сохранить изменения в базе данных
+
+        return redirect(url_for('article_list'))
+
+    return render_template("delete_article.html", article=article)
