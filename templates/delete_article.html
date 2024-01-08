@@ -9,5 +9,6 @@
         <p>Вы действительно хотите удалить объявление "{{ article.title }}"?</p>
 
         <input type="submit" value="Удалить">
+        <a href="/articles/{{ article.id }}">Отмена</a>
     </form>
 {% endblock %}

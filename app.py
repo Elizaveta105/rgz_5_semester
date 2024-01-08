@@ -11,10 +11,10 @@ app = Flask(__name__)
 
 
 app.secret_key = '123'
-user_db = 'user_liza'
+user_db = 'elizaveta_rgz_5'
 host_ip = '127.0.0.1'
 host_port = '5432'
-database_name = 'elizaveta_rgz'
+database_name = 'orm_rgz_5_sem'
 password = '123'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
