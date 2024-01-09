@@ -12,6 +12,9 @@
                 <th>Почта</th>
                 <th>Тема объявления</th>
                 <th>Текст объявления</th>
+                {% if current_user.login == 'admin' %}
+                <th>Действие</th>
+            {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -25,6 +28,14 @@
                 {% endif %}
                 <td>{{ article.title }}</td>
                 <td>{{ article.article_text }}</td>
+                {% if current_user.login == 'admin' %}
+                <td>
+                    <form action="/delete/{{ article.id }}" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

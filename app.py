@@ -240,3 +240,15 @@ def delete_account(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('user_list'))  # Перенаправление на страницу со списком пользователей
+
+
+@app.route('/delete/<int:article_id>', methods=['POST'])
+def delete_article(article_id):
+    if not current_user.is_admin:
+        return "Доступ запрещен"
+    
+    article = articles.query.get(article_id)
+    db.session.delete(article)
+    db.session.commit()
+    
+    return redirect(url_for('list_articles'))  # Перенаправляем пользователя на главную страницу
