@@ -8,7 +8,10 @@
 
         <p>Вы действительно хотите удалить объявление "{{ article.title }}"?</p>
 
-        <input type="submit" value="Удалить">
-        <a href="/articles/{{ article.id }}">Отмена</a>
+        <input type="submit" value="Удалить"><br>
+        <p>
+            <a href="/article_list" style="color: rgb(119, 81, 39); border: 2px solid rgb(119, 81, 39); 
+            padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Отмена</a>
+        </p>
     </form>
 {% endblock %}

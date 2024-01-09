@@ -8,15 +8,13 @@
         <thead>
             <tr>
                 <th>Имя пользователя</th>
-                <th>Email</th>
-                <th>Действия</th>
+                <th>Действие</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 <tr>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
                     <td>
                         <form action="/delete_account/{{ user.id }}" method="POST" style="display: inline;">
                             <button type="submit">Удалить</button>  
@@ -25,8 +23,9 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table><br><br>
     <p>
-        <a href="/" style="color: white; border: 2px solid rgb(119, 81, 39); padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
+        <a href="/" style="color: rgb(119, 81, 39); border: 2px solid rgb(119, 81, 39); 
+        padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
     </p>
 {% endblock %}

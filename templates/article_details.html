@@ -4,14 +4,16 @@
 
 {% block main %}
     <h1>Детали объявления</h1>
-    <p>
-        <a href="/article_list" style="border: 2px solid rgb(119, 81, 39); padding: 5px 10px; border-radius: 5px;">Назад к списку статей</a>
-    </p>
 
     <h3>{{ article.title }}</h3>
-    <p>{{ article.article_text }}</p>
+    <p>{{ article.article_text }}</p><br>
 
-    <h2>Действия</h2>
+    <h3>Действия:</h3>
     <a href="{{ url_for('edit') }}">Редактировать объявление</a>
-    <br><a href="{{ url_for('delete') }}">Удалить объявление</a>
+    <br><a href="{{ url_for('delete') }}">Удалить объявление</a><br><br>
+
+    <p>
+        <a href="/article_list" style="color: rgb(119, 81, 39); border: 2px solid rgb(119, 81, 39); 
+        padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Назад к списку статей</a>
+    </p>
 {% endblock %}

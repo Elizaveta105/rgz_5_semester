@@ -9,7 +9,7 @@
         <div>
             <input type="text" id="title" name="title" value="{{ articles.title }}" placeholder="Заголовок" required>
             <label for="title">Заголовок</label>
-        </div>
+        </div><br>
 
         <div>
             <textarea id="article_text" placeholder="Текст объявления" name="article_text" required>{{ articles.article_text }}</textarea>
@@ -20,7 +20,8 @@
 
         <input type="submit" value="Сохранить изменения">
         <p>
-            <a href="/" style="color: white; border: 2px solid rgb(96, 159, 121); padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
+            <a href="/" style="color: rgb(119, 81, 39); border: 2px solid rgb(119, 81, 39); 
+            padding: 5px 10px; border-radius: 5px; margin-right: 10px;">Вернуться на главную</a>
         </p>
     </form>
 {% endblock %}

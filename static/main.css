@@ -51,3 +51,12 @@ a:visited {
     color: rgb(13, 88, 13);
     font-style: italic;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 2px solid rgb(89, 64, 45);
+    padding: 8px;
+}
