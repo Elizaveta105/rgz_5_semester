@@ -1,3 +1,4 @@
+# Импортируем необходимые классы и функции из Flask
 from flask import Flask, redirect, render_template, request, url_for
 from Db import db
 from Db.models import users, articles
@@ -9,27 +10,39 @@ import os
 
 app = Flask(__name__)
 
-
+#Устанавливаем секретный ключ для сессий
 app.secret_key = '123'
+
+
+# Устанавливаем параметры базы данных
+
+# ORM (Object-Relational Mapping) - это технология, которая позволяет связывать объектно-ориентированную 
+# модель данных с реляционной базой данных. Она предоставляет удобный интерфейс для работы с базой данных, 
+# позволяя взаимодействовать с ней, используя объекты и классы, а не низкоуровневые SQL-запросы
 user_db = 'elizaveta_rgz_5'
 host_ip = '127.0.0.1'
 host_port = '5432'
 database_name = 'orm_rgz_5_sem'
 password = '123'
 
+# Устанавливаем соединение с базой данных
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user_db}:{password}@{host_ip}:{host_port}/{database_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+# Инициализируем LoginManager
+# Это инструмент Flask, который помогает управлять процессом аутентификации пользователей в приложении
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
+# Определяем функцию для загрузки пользователей
 @login_manager.user_loader
 def load_users(user_id):
     return users.query.get(int(user_id))
 
 
+# Роут для главной страницы
 @app.route("/")
 def glavn():
     if current_user.is_authenticated:
@@ -46,7 +59,10 @@ def main():
     print(my_users)
     return "result in console!"
 
+
+# Функция для сохранения фотографии пользователя
 def save_photo(photo):
+
     # Генерируем уникальное имя файла
     if current_user.is_authenticated:
         photo_filename = str(photo.filename) + str(current_user.id)
@@ -64,6 +80,7 @@ def save_photo(photo):
     return photo_filename
 
 
+# Роут для регистрации нового пользователя
 @app.route('/registr', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -115,6 +132,7 @@ def register():
     return render_template('registr.html', error=error)
 
 
+# Роут для входа (для авторизованного пользователя)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -141,6 +159,7 @@ def login():
     return render_template('login.html', error_message=error)
 
 
+# Роут для выхода из аккаунта
 @app.route("/logout")
 @login_required
 def logout():
@@ -148,6 +167,7 @@ def logout():
     return redirect(url_for('glavn'))
 
 
+# Роут для просмотра всех объявлений
 @app.route("/article_list")
 @login_required
 def article_list():
@@ -155,6 +175,7 @@ def article_list():
     return render_template('list_articles.html', articles=my_articles)
 
 
+# Роут для добавления нового объявления
 @app.route("/add_article", methods=['GET', 'POST'])
 @login_required
 def add_article():
@@ -173,21 +194,24 @@ def add_article():
     return redirect(url_for("article_list"))
 
 
+# Роут для просмотра объявлений
 @app.route("/articles/<int:article_id>")
 @login_required
 def view_article(article_id):
     article = articles.query.get(article_id)
     if not article:
-        return "Статья не найдена"
+        return "Объявление не найдено"
     return render_template("article_details.html", article=article)
 
 
+# Роут для просмотра своих объявлений
 @app.route("/list_articles")
 def list_articles():
     all_articles = articles.query.all()
     return render_template("article_list.html", articles=all_articles)
 
 
+# Роут для редактирования объявлений
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
@@ -205,6 +229,7 @@ def edit():
     return render_template('edit.html', articles=article)
 
 
+# Роут для удаления объявлений
 @app.route("/delete", methods=['GET', 'POST'])
 @login_required
 def delete():
@@ -219,6 +244,7 @@ def delete():
     return render_template("delete_article.html", article=article)
 
 
+# Роут для просмотра всех пользователей
 @app.route('/user_list')
 @login_required
 def user_list():
@@ -230,6 +256,7 @@ def user_list():
     return render_template('user_list.html', users=user)
 
 
+# Роут для удаления аккаунтов
 @app.route('/delete_account/<int:user_id>', methods=['POST'])
 @login_required
 def delete_account(user_id):
@@ -242,6 +269,7 @@ def delete_account(user_id):
     return redirect(url_for('user_list'))  # Перенаправление на страницу со списком пользователей
 
 
+# Роут для удаления объявлений
 @app.route('/delete/<int:article_id>', methods=['POST'])
 def delete_article(article_id):
     if not current_user.is_admin:
